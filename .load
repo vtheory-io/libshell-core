@@ -1,0 +1,13 @@
+# .load
+
+[ ! -z "${BASH_SOURCE}" ] && \
+    export SHELL_LIB_DIR=$(dirname $(realpath ${BASH_SOURCE})) || \
+    export SHELL_LIB_DIR=$(cd $(dirname $0) && pwd)
+
+export SHELL_LIB_SETTINGS="${SHELL_LIB_DIR}/settings"
+[ ! -z "${PROFILE_DIR}" ] || export PROFILE_DIR="${SHELL_LIB_DIR}"
+[[ $PATH == *"${SHELL_LIB_DIR}/path"* ]] || export PATH="${PATH}:${SHELL_LIB_DIR}/path"
+
+for file in $(ls -1F ${SHELL_LIB_DIR} | grep -v '/$' | grep -i '.sh$'); do
+  source "${SHELL_LIB_DIR}/${file}";
+done;
